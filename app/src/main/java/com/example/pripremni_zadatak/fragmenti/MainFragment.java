@@ -27,10 +27,11 @@ import java.util.List;
 
 public class MainFragment extends Fragment implements MyRecAdapter.MyOnClickListener {
     private RecyclerView recyclerView;
-    private MyHelper myHelper=null;
-    private List<Glumac>glumacList;
+    private MyHelper myHelper = null;
+    private List<Glumac> glumacList;
     private Button btnEmpty;
     private TextView tvEmpty;
+    private MyRecAdapter adapter;
 
     public MainFragment() {
         // Required empty public constructor
@@ -44,71 +45,80 @@ public class MainFragment extends Fragment implements MyRecAdapter.MyOnClickList
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
+        adapter = new MyRecAdapter(this, glumacList);
+        recyclerView.setAdapter(adapter);
+
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         refresh();
 
-        recyclerView=view.findViewById(R.id.rvmain);
-        tvEmpty=view.findViewById(R.id.tvEMPTY);
-        btnEmpty=view.findViewById(R.id.btnAddGlumac);
+
+        recyclerView = view.findViewById(R.id.rvmain);
+        tvEmpty = view.findViewById(R.id.tvEMPTY);
+        btnEmpty = view.findViewById(R.id.btnAddGlumac);
         btnEmpty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddGlumacFragment addGlumacFragment=new AddGlumacFragment();
+                AddGlumacFragment addGlumacFragment = new AddGlumacFragment();
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container,addGlumacFragment)
+                        .replace(R.id.fragment_container, addGlumacFragment)
                         .addToBackStack(null).commit();
             }
         });
 
-//        if (glumacList.isEmpty()){
-//            recyclerView.setVisibility(View.GONE);
-//            tvEmpty.setVisibility(View.VISIBLE);
-//        }
-//        else {
-        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        MyRecAdapter adapter=new MyRecAdapter(this,glumacList);
-        recyclerView.setAdapter(adapter);
-    //}
+        if (glumacList.isEmpty()) {
+            recyclerView.setVisibility(View.GONE);
+            tvEmpty.setVisibility(View.VISIBLE);
+        } else {
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+            recyclerView.setLayoutManager(layoutManager);
+            adapter = new MyRecAdapter(this, glumacList);
+            recyclerView.setAdapter(adapter);
+        }
 
     }
 
     private void refresh() {
         try {
-            glumacList=new ArrayList<>();
-            glumacList =getMyhelper().getGlumacDao().queryForAll();
+            glumacList = new ArrayList<>();
+            glumacList = getMyhelper().getGlumacDao().queryForAll();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
-    public MyHelper getMyhelper(){
-        if (myHelper==null){
-            myHelper= OpenHelperManager.getHelper(getActivity(),MyHelper.class);
+    public MyHelper getMyhelper() {
+        if (myHelper == null) {
+            myHelper = OpenHelperManager.getHelper(getActivity(), MyHelper.class);
         }
-        return  myHelper;
+        return myHelper;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (myHelper!= null){
+        if (myHelper != null) {
             OpenHelperManager.releaseHelper();
-            myHelper=null;
+            myHelper = null;
         }
     }
 
     @Override
     public void MyOnClick(int id) {
-        OpisGlumcaFragment opisGlumcaFragment=new OpisGlumcaFragment();
-        Bundle bundle=new Bundle();
-        bundle.putInt("Id",id);
+        OpisGlumcaFragment opisGlumcaFragment = new OpisGlumcaFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("Id", id);
         opisGlumcaFragment.setArguments(bundle);
         getFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container,opisGlumcaFragment)
+                .replace(R.id.fragment_container, opisGlumcaFragment)
                 .addToBackStack(null).commit();
     }
 }

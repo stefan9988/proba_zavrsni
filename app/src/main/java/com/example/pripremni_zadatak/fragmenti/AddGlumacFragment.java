@@ -36,11 +36,10 @@ public class AddGlumacFragment extends Fragment {
     private String prezime;
     private String bio;
     private float ocena;
-    private boolean dozvola = false;
-    private boolean gotovo = false;
     private MyHelper myHelper = null;
+    private int id;
 
-    private static final String TAG = "SJEBALO SE";
+
 
 
     public AddGlumacFragment() {
@@ -67,6 +66,9 @@ public class AddGlumacFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AddFilmFragment addFilmFragment = new AddFilmFragment();
+                Bundle bundle=new Bundle();
+                bundle.putInt("Id",id);
+                addFilmFragment.setArguments(bundle);
                 getFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, addFilmFragment)
                         .commit();
@@ -75,6 +77,19 @@ public class AddGlumacFragment extends Fragment {
         btnGotovo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ime = etIme.getText().toString();
+                prezime = etPrezime.getText().toString();
+                bio = etBio.getText().toString();
+                String ocenaStr = etOcena.getText().toString();
+                try {
+                    ocena = Float.parseFloat(ocenaStr);
+                } catch (NumberFormatException e) {
+
+                    Toast.makeText(getActivity(), "Unesite broj", Toast.LENGTH_LONG).show();
+                }
+
+
+                id=addGlumac();
 
                 MainFragment mainFragment = new MainFragment();
                 getFragmentManager().beginTransaction()
@@ -84,30 +99,19 @@ public class AddGlumacFragment extends Fragment {
         });
 
 
-        ime = etIme.getText().toString();
-        prezime = etPrezime.getText().toString();
-        bio = etBio.getText().toString();
-        String ocenaStr = etOcena.getText().toString();
-        try {
-            ocena = Float.parseFloat(ocenaStr);
-        } catch (NumberFormatException e) {
 
-            Toast.makeText(getActivity(), "Unesite broj", Toast.LENGTH_LONG).show();
-        }
-
-
-        addGlumac();
 
     }
 
 
-    private void addGlumac() {
+    private int addGlumac() {
         Glumac glumac = new Glumac();
         glumac.setIme(ime);
         glumac.setPrezime(prezime);
         glumac.setBio(bio);
         glumac.setOcena(ocena);
         glumac.setDate(new Date());
+
 
         try {
             getMyhelper().getGlumacDao().create(glumac);
@@ -116,6 +120,13 @@ public class AddGlumacFragment extends Fragment {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        try {
+            id=getMyhelper().getGlumacDao().queryBuilder().where().eq(Glumac.IME_FIELD,ime)
+                    .and().eq(Glumac.PREZIME_FIELD,prezime).queryForFirst().getId();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return id;
     }
 
     public MyHelper getMyhelper() {

@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragmenti.AddFilmFragment">
+    tools:context=".fragmenti.AddFilmFragment"
+    android:orientation="vertical"
+    android:id="@+id/fragment_addFilm">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <EditText
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:hint="Unesite ime filma"
+        android:id="@+id/etImeFilma"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:hint="Unesite zanr filma"
+        android:id="@+id/etZanr"/>
 
-</FrameLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnjosFilm"
+        android:text="Dodaj jos jedan film"
+        android:layout_gravity="center"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btngotovFilm"
+        android:text="Zavrseno dodavanje"
+        android:layout_gravity="center"/>
+
+
+</LinearLayout>

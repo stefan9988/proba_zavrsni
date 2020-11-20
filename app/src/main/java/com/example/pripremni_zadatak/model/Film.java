@@ -12,6 +12,7 @@ public class Film {
     public static final String IME_FIELD="Ime";
     public static final String ZANR_FIELD="Zanr";
     public static final String GODINA_FIELD="Godina";
+    public static final String GLUMAC_FIELD="Glumac";
 
     @DatabaseField(columnName = ID_FIELD,generatedId = true)
     private int id;
@@ -21,6 +22,8 @@ public class Film {
     private String zanr;
     @DatabaseField(columnName = GODINA_FIELD,canBeNull = false)
     private Date godina;
+    @DatabaseField(columnName = GLUMAC_FIELD,foreign = true,foreignAutoRefresh = true)
+    private Glumac glumac;
 
     public Film() {
     }
@@ -51,5 +54,13 @@ public class Film {
 
     public void setGodina(Date godina) {
         this.godina = godina;
+    }
+
+    public Glumac getGlumac() {
+        return glumac;
+    }
+
+    public void setGlumac(Glumac glumac) {
+        this.glumac = glumac;
     }
 }

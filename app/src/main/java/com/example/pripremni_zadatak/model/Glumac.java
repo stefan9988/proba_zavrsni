@@ -1,5 +1,6 @@
 package com.example.pripremni_zadatak.model;
 
+import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -31,7 +32,7 @@ public class Glumac {
     @DatabaseField(columnName =DATUM_FIELD ,canBeNull = false)
     private Date date;
     @ForeignCollectionField(columnName = FILMOVI_FIELD)
-    private List<Film>films;
+    private ForeignCollection<Film>films;
 
     public Glumac() {
     }
@@ -81,11 +82,11 @@ public class Glumac {
         this.date = date;
     }
 
-    public List<Film> getFilms() {
+    public ForeignCollection<Film> getFilms() {
         return films;
     }
 
-    public void setFilms(List<Film> films) {
+    public void setFilms(ForeignCollection<Film> films) {
         this.films = films;
     }
 }

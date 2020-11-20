@@ -35,9 +35,9 @@ public class MyRecAdapter extends RecyclerView.Adapter<MyRecAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.bind(listener,data.get(position).getId(),position,data);
-//        holder.tvIme.setText(data.get(position).getIme());
-//        holder.tvPrezime.setText(data.get(position).getPrezime());
-//        holder.ratingBar.setRating((float) data.get(position).getOcena());
+        holder.tvIme.setText(data.get(position).getIme());
+        holder.tvPrezime.setText(data.get(position).getPrezime());
+        holder.ratingBar.setRating((float) data.get(position).getOcena());
     }
 
     @Override
@@ -59,8 +59,8 @@ public class MyRecAdapter extends RecyclerView.Adapter<MyRecAdapter.MyViewHolder
         }
         public void bind(MyOnClickListener listener, int id,int pos,List<Glumac> data){
             tvIme.setText(data.get(pos).getIme());
-            tvPrezime.setText(data.get(pos).getPrezime());
-            ratingBar.setRating((float) data.get(pos).getOcena());
+            //tvPrezime.setText(data.get(pos).getPrezime());
+            //ratingBar.setRating((float) data.get(pos).getOcena());
             wholeView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
