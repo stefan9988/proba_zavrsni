@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="planets_array" >
+        <item>Ime</item>
+        <item>Prezime</item>
+        <item>Biografija</item>
+        <item>Ocena</item>
+    </string-array>
+</resources>

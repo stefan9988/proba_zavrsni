@@ -29,7 +29,6 @@ import java.util.List;
 public class AddFilmFragment extends Fragment {
     private EditText etIme;
     private EditText etZanr;
-    private EditText etGodina;
     private Button btnGotov;
     private Button btnJos;
     private int id;
@@ -58,6 +57,8 @@ public class AddFilmFragment extends Fragment {
         btnJos=view.findViewById(R.id.btnjosFilm);
         id=getArguments().getInt("id");
 
+
+
         btnGotov.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,24 +73,18 @@ public class AddFilmFragment extends Fragment {
                 film.setIme(ime);
                 film.setZanr(zanr);
                 film.setGodina(new Date());
-
+                film.setGlumac(glumac);
 
                 try {
                     getMyhelper().getFilmDao().create(film);
-                    ForeignCollection<Film>ffilm=getMyhelper().getFilmDao().queryBuilder().where()
-                            .eq(Film.IME_FIELD,ime).and().eq(Film.ZANR_FIELD,zanr).queryForFirst();
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
-                glumac.setFilms(film);
-                try {
-                    getMyhelper().getGlumacDao().update(glumac);
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
+
+
                 MainFragment mainFragment=new MainFragment();
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container,mainFragment);
+                        .replace(R.id.fragment_container,mainFragment).commit();
             }
         });
 

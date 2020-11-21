@@ -31,7 +31,7 @@ public class Glumac {
     private float ocena;
     @DatabaseField(columnName =DATUM_FIELD ,canBeNull = false)
     private Date date;
-    @ForeignCollectionField(columnName = FILMOVI_FIELD)
+    @ForeignCollectionField(columnName = FILMOVI_FIELD,eager = true)
     private ForeignCollection<Film>films;
 
     public Glumac() {
@@ -66,7 +66,7 @@ public class Glumac {
         this.bio = bio;
     }
 
-    public double getOcena() {
+    public float getOcena() {
         return ocena;
     }
 

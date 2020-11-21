@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.pripremni_zadatak.R;
+import com.example.pripremni_zadatak.adapteri.FilmAdapter;
 import com.example.pripremni_zadatak.adapteri.MyRecAdapter;
 import com.example.pripremni_zadatak.model.Glumac;
 import com.example.pripremni_zadatak.model.MyHelper;
